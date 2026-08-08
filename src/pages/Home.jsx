@@ -1,10 +1,60 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { FiCheckCircle, FiCode, FiCpu, FiUsers, FiArrowRight } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiCheckCircle, FiCode, FiCpu, FiUsers, FiArrowRight, FiPlay } from "react-icons/fi";
 import { updateSEO } from "../utils/seo";
 
-export default function Home() {
+const SNIPPETS = {
+    javascript: {
+        lang: "solution.js",
+        code: [
+            { line: 'function twoSum(nums, target) {', color: 'pink' },
+            { line: '  const map = new Map();', color: 'pink' },
+            { line: '  for (let i = 0; i < nums.length; i++) {', color: 'pink' },
+            { line: '    const comp = target - nums[i];', color: 'normal' },
+            { line: '    if (map.has(comp)) {', color: 'pink' },
+            { line: '      return [map.get(comp), i];', color: 'green' },
+            { line: '    }', color: 'normal' },
+            { line: '    map.set(nums[i], i);', color: 'normal' },
+            { line: '  }', color: 'normal' },
+            { line: '}', color: 'normal' },
+        ]
+    },
+    python: {
+        lang: "solution.py",
+        code: [
+            { line: 'def two_sum(nums, target):', color: 'pink' },
+            { line: '    seen = {}', color: 'normal' },
+            { line: '    for i, num in enumerate(nums):', color: 'pink' },
+            { line: '        diff = target - num', color: 'normal' },
+            { line: '        if diff in seen:', color: 'pink' },
+            { line: '            return [seen[diff], i]', color: 'green' },
+            { line: '        seen[num] = i', color: 'normal' },
+        ]
+    },
+    java: {
+        lang: "Solution.java",
+        code: [
+            { line: 'class Solution {', color: 'pink' },
+            { line: '    public int[] twoSum(int[] nums, int target) {', color: 'pink' },
+            { line: '        Map<Integer, Integer> map = new HashMap<>();', color: 'normal' },
+            { line: '        for (int i = 0; i < nums.length; i++) {', color: 'pink' },
+            { line: '            int comp = target - nums[i];', color: 'normal' },
+            { line: '            if (map.containsKey(comp)) {', color: 'pink' },
+            { line: '                return new int[] { map.get(comp), i };', color: 'green' },
+            { line: '            }', color: 'normal' },
+            { line: '            map.put(nums[i], i);', color: 'normal' },
+            { line: '        }', color: 'normal' },
+            { line: '        return new int[]{};', color: 'normal' },
+            { line: '    }', color: 'normal' },
+            { line: '}', color: 'normal' },
+        ]
+    }
+};
+
+export default function Home({ domain }) {
+    const [activeLang, setActiveLang] = useState("javascript");
+    const [isRunning, setIsRunning] = useState(false);
 
     useEffect(() => {
         updateSEO({
@@ -14,6 +64,11 @@ export default function Home() {
             path: "/"
         });
     }, []);
+
+    const handleRunTest = () => {
+        setIsRunning(true);
+        setTimeout(() => setIsRunning(false), 800);
+    };
 
     return (
         <div className="relative overflow-hidden bg-white">
@@ -36,7 +91,7 @@ export default function Home() {
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
                             </span>
-                            Interview Preparation
+                            Interview Readiness Engine
                         </div>
 
                         <h1 className="text-5xl lg:text-7xl font-black text-gray-900 leading-[1.1] tracking-tight">
@@ -44,26 +99,21 @@ export default function Home() {
                         </h1>
 
                         <p className="mt-8 text-xl text-gray-600 leading-relaxed max-w-lg">
-                            Stop memorizing, start mastering. PrepWise uses data-driven insights to help you ace HR, Technical, and System Design rounds.
+                            Stop memorizing, start mastering. PrepWise provides curated roadmaps to help you ace HR, Technical, and Coding rounds.
                         </p>
 
                         <div className="mt-10 flex flex-col sm:flex-row gap-4">
                             <Link
-                                to="/dashboard"
+                                to={domain ? "/dashboard" : "/choose-domain"}
                                 className="group px-8 py-4 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 shadow-xl shadow-indigo-200 transition-all flex items-center justify-center gap-2 w-max"
                             >
-                                Start Preparing Now
+                                {domain ? "Go to Dashboard" : "Start Preparing Now"}
                                 <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
                             </Link>
                         </div>
-
-                        {/* Trust Badges */}
-                        <div className="mt-12 flex items-center gap-6 text-gray-400">
-                            <p className="text-xs font-bold uppercase tracking-widest">Trusted by students from</p>
-                        </div>
                     </motion.div>
 
-                    {/* Right Visual - Layered Dashboard Card */}
+                    {/* Right Visual - Interactive Editor Card */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -71,37 +121,69 @@ export default function Home() {
                         className="relative"
                     >
                         <div className="relative z-10 bg-[#0d1117] rounded-[2.5rem] p-8 shadow-2xl border border-gray-800 transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
-                            {/* Window dots */}
-                            <div className="flex gap-2 mb-6">
-                                <div className="w-3 h-3 rounded-full bg-red-500 border border-red-600" />
-                                <div className="w-3 h-3 rounded-full bg-amber-500 border border-amber-600" />
-                                <div className="w-3 h-3 rounded-full bg-emerald-500 border border-emerald-600" />
+                            {/* Editor Top Control Bar */}
+                            <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-800">
+                                <div className="flex gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-red-500" />
+                                    <div className="w-3 h-3 rounded-full bg-amber-500" />
+                                    <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                                </div>
+
+                                {/* Language Switcher Tabs */}
+                                <div className="flex gap-1.5 bg-gray-900 p-1 rounded-xl border border-gray-800 text-xs font-bold font-mono">
+                                    {["javascript", "python", "java"].map((lang) => (
+                                        <button
+                                            key={lang}
+                                            onClick={() => setActiveLang(lang)}
+                                            className={`px-3 py-1 rounded-lg transition-all capitalize ${
+                                                activeLang === lang 
+                                                    ? "bg-indigo-600 text-white shadow-sm" 
+                                                    : "text-gray-400 hover:text-white"
+                                            }`}
+                                        >
+                                            {lang === "javascript" ? "JS" : lang}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                             
-                            {/* Code editor look */}
-                            <div className="font-mono text-[13px] sm:text-sm text-gray-300 space-y-1.5 leading-relaxed tracking-wide">
-                                <p><span className="text-pink-400">function</span> <span className="text-blue-400">twoSum</span>(nums, target) {'{'}</p>
-                                <p className="pl-4"><span className="text-pink-400">const</span> map = <span className="text-pink-400">new</span> Map();</p>
-                                <p className="pl-4"><span className="text-pink-400">for</span> (<span className="text-pink-400">let</span> i = 0; i &lt; nums.length; i++) {'{'}</p>
-                                <p className="pl-8"><span className="text-pink-400">const</span> comp = target - nums[i];</p>
-                                <p className="pl-8"><span className="text-pink-400">if</span> (map.has(comp)) {'{'}</p>
-                                <p className="pl-12 text-green-300"><span className="text-pink-400">return</span> [map.get(comp), i];</p>
-                                <p className="pl-8">{'}'}</p>
-                                <p className="pl-8">map.set(nums[i], i);</p>
-                                <p className="pl-4">{'}'}</p>
-                                <p>{'}'}</p>
-                            </div>
+                            {/* Code editor look with animation */}
+                            <AnimatePresence mode="wait">
+                                <motion.div 
+                                    key={activeLang}
+                                    initial={{ opacity: 0, y: 5 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -5 }}
+                                    className="font-mono text-[13px] sm:text-sm text-gray-300 space-y-1.5 leading-relaxed tracking-wide min-h-[220px]"
+                                >
+                                    {SNIPPETS[activeLang].code.map((item, idx) => (
+                                        <p key={idx}>
+                                            {item.color === 'pink' && <span className="text-pink-400">{item.line}</span>}
+                                            {item.color === 'green' && <span className="text-emerald-300">{item.line}</span>}
+                                            {item.color === 'normal' && <span>{item.line}</span>}
+                                        </p>
+                                    ))}
+                                </motion.div>
+                            </AnimatePresence>
                             
                             {/* Run Result Bottom Bar */}
-                            <div className="mt-8 pt-5 border-t border-gray-800 flex items-center justify-between">
+                            <div className="mt-6 pt-5 border-t border-gray-800 flex items-center justify-between">
                                 <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
                                     <FiCheckCircle />
-                                    <span>Accepted</span>
+                                    <span>{isRunning ? "Running logic..." : "Passed All Test Cases"}</span>
                                 </div>
-                                <span className="text-xs text-gray-500 font-mono">Runtime: 58 ms</span>
+                                
+                                <button
+                                    onClick={handleRunTest}
+                                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600 hover:text-white rounded-xl font-mono text-xs font-bold transition-all border border-indigo-500/30"
+                                >
+                                    <FiPlay className={isRunning ? "animate-spin" : ""} size={12} />
+                                    <span>{isRunning ? "Testing" : "Test Run"}</span>
+                                </button>
                             </div>
                         </div>
-                        {/* Floating Decoration */}
+
+                        {/* Floating Ambient Glow */}
                         <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-indigo-500 rounded-full -z-10 blur-[3xl] opacity-20 animate-pulse" />
                     </motion.div>
                 </section>
@@ -117,19 +199,19 @@ export default function Home() {
                         <Feature
                             icon={<FiUsers className="w-6 h-6" />}
                             title="HR & Behavioral"
-                            desc="Master the 'Tell me about yourself' and STAR method questions with AI feedback."
+                            desc="Master situational and cultural fit questions using the STAR framework strategy."
                             color="indigo"
                         />
                         <Feature
                             icon={<FiCpu className="w-6 h-6" />}
                             title="Technical Core"
-                            desc="Deep dives into OS, DBMS, Networking, and System Design patterns."
+                            desc="Deep dive into domain architecture, core concepts, and framework fundamentals."
                             color="emerald"
                         />
                         <Feature
                             icon={<FiCode className="w-6 h-6" />}
-                            title="DSA Practice"
-                            desc="Curated lists from LeetCode and GFG specifically for top-tier companies."
+                            title="Practical Coding"
+                            desc="Curated library of practical coding challenges with concise code solution snippets."
                             color="amber"
                         />
                     </div>
@@ -145,13 +227,13 @@ export default function Home() {
                                 Don't leave your career to chance.
                             </h2>
                             <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-                                Join thousands of engineers stepping up their game.
+                                Select your technology domain and start practicing today.
                             </p>
                             <Link
-                                to="/dashboard"
+                                to={domain ? "/dashboard" : "/choose-domain"}
                                 className="inline-block bg-white text-gray-900 px-10 py-4 rounded-2xl font-black hover:bg-indigo-50 hover:scale-105 transition-all shadow-xl"
                             >
-                                Start Preparing Now
+                                {domain ? "Go to Dashboard" : "Pick Your Tech Stack"}
                             </Link>
                         </div>
                     </div>

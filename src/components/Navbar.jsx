@@ -1,62 +1,44 @@
 import { Link, NavLink } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Navbar() {
+export default function Navbar({ domain }) {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    if (!document.title.includes("|")) { 
-        document.title = "PrepWise | Your AI-Powered Interview Coach";
-    }
-    
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc && !metaDesc.getAttribute("content")) {
-        metaDesc.setAttribute("content", "Navigate through PrepWise to access AI-driven interview prep, coding labs, and behavioral session roadmaps.");
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Start Preparing Now", path: "/dashboard", cta: true },
-  ];
+  // Dynamically set links based on whether a domain is selected
+  const navLinks = domain
+    ? [
+        { name: "Home", path: "/" },
+        { name: "Dashboard", path: "/dashboard", cta: true },
+      ]
+    : [
+        { name: "Home", path: "/" },
+        { name: "Choose Domain", path: "/choose-domain", cta: true },
+      ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${
-        scrolled
-          ? "bg-white/80 backdrop-blur-md border-b border-gray-200/50 py-3 shadow-sm"
-          : "bg-transparent py-6"
-      }`}
-    >
+    <nav className="fixed top-0 left-0 w-full z-[100] bg-white/90 backdrop-blur-md border-b border-gray-100 py-4 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
+        {/* Brand Logo */}
         <Link
           to="/"
           className="text-2xl font-black tracking-tighter flex items-center"
         >
           <span className="text-indigo-600">Prep</span>
-          <span className={scrolled ? "text-gray-900" : "text-gray-800"}>Wise</span>
+          <span className="text-gray-900">Wise</span>
         </Link>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Desktop Navigation Links */}
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <NavLink
               key={link.name}
               to={link.path}
               className={({ isActive }) => `
-                relative text-sm font-medium transition-all duration-300
+                relative text-sm font-bold transition-all duration-300
                 ${link.cta 
-                  ? "bg-indigo-600 text-white px-5 py-2.5 rounded-full hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-200" 
+                  ? "bg-indigo-600 text-white px-5 py-2.5 rounded-2xl hover:bg-indigo-700 shadow-lg shadow-indigo-100 active:scale-95" 
                   : isActive 
                     ? "text-indigo-600" 
                     : "text-gray-600 hover:text-indigo-600"}
@@ -77,9 +59,9 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Mobile Toggle */}
+        {/* Mobile Toggle Button */}
         <button
-          className="md:hidden p-2 rounded-xl bg-gray-100/80 text-2xl text-gray-700 hover:bg-gray-200 transition-colors"
+          className="md:hidden p-2.5 rounded-xl bg-gray-100/80 text-xl text-gray-700 hover:bg-gray-200 transition-colors"
           onClick={() => setOpen(!open)}
           aria-label="Toggle Menu"
         >
@@ -87,7 +69,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -96,21 +78,21 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 w-full bg-white border-b border-gray-100 shadow-xl md:hidden"
           >
-            <div className="flex flex-col p-6 gap-4">
+            <div className="flex flex-col p-6 gap-3">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.name}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: i * 0.05 }}
                 >
                   <NavLink
                     to={link.path}
                     onClick={() => setOpen(false)}
                     className={({ isActive }) => `
-                      block w-full text-lg font-semibold p-3 rounded-lg transition-colors
+                      block w-full text-base font-bold p-3 rounded-xl transition-colors
                       ${link.cta 
-                        ? "bg-indigo-600 text-white text-center mt-2" 
+                        ? "bg-indigo-600 text-white text-center mt-2 shadow-md shadow-indigo-100" 
                         : isActive ? "text-indigo-600 bg-indigo-50" : "text-gray-800 hover:bg-gray-50"}
                     `}
                   >
@@ -125,4 +107,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
