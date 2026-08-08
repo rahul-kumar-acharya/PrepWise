@@ -2,6 +2,7 @@ import { useState, useEffect  } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FiUsers, FiMessageCircle, FiInfo, FiChevronDown, FiStar, FiArrowLeft } from "react-icons/fi";
+import { updateSEO } from "../utils/seo";
 import hrQuestions from "../data/hrQuestions";
 
 export default function HRQuestions({ domain }) {
@@ -9,12 +10,12 @@ export default function HRQuestions({ domain }) {
 
     useEffect(() => {
         const domainLabel = domain ? `${domain.charAt(0).toUpperCase() + domain.slice(1)} ` : "";
-        document.title = `${domainLabel}Behavioral Interview Prep | PrepWise`;
-        
-        const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc) {
-            metaDesc.setAttribute("content", `Master the HR round for ${domain || 'tech'} roles. Practice common behavioral questions using the STAR method with PrepWise.`);
-        }
+        updateSEO({
+            title: `${domainLabel}Behavioral & HR Interview Practice (STAR Method) | PrepWise`,
+            description: `Master the HR & culture fit round for ${domain || 'tech'} engineering roles using the STAR method (Situation, Task, Action, Result) with PrepWise.`,
+            keywords: "HR Behavioral Questions, STAR Method, Tell Me About Yourself, Cultural Fit Interview, Soft Skills for Software Developers, PrepWise",
+            path: "/hr"
+        });
     }, [domain]);
 
     if (!domain) {

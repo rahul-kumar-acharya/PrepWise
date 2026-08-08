@@ -2,22 +2,23 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaUserTie, FaLaptopCode, FaCode, FaExchangeAlt, FaArrowRight, FaRocket } from "react-icons/fa";
+import { updateSEO } from "../utils/seo";
 
 export default function Dashboard({ domain, setDomain }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Dynamically set title based on whether a domain is picked
-        const pageTitle = domain 
-            ? `${domain.charAt(0).toUpperCase() + domain.slice(1)} Dashboard | PrepWise` 
-            : "Setup Your Path | PrepWise";
+        const formattedDomain = domain ? domain.charAt(0).toUpperCase() + domain.slice(1) : "";
+        const title = domain 
+            ? `${formattedDomain} Preparation Dashboard | PrepWise` 
+            : "Setup Your Interview Path | PrepWise";
             
-        document.title = pageTitle;
-        
-        const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc) {
-            metaDesc.setAttribute("content", "Access your curated interview roadmap. Practice behavioral questions, master technical core concepts, and solve coding challenges tailored to your career domain.");
-        }
+        updateSEO({
+            title,
+            description: `Access your tailored ${formattedDomain || 'tech'} interview preparation roadmap. Practice STAR behavioral questions, core technical concepts, and coding challenges on PrepWise.`,
+            keywords: `${formattedDomain || 'Tech'} Interview Roadmap, Behavioral STAR Prep, Core Technical Concepts, Coding Challenges, PrepWise`,
+            path: "/dashboard"
+        });
     }, [domain]);
 
     if (!domain) {

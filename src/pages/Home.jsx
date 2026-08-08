@@ -2,16 +2,17 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiCheckCircle, FiCode, FiCpu, FiUsers, FiArrowRight } from "react-icons/fi";
+import { updateSEO } from "../utils/seo";
 
 export default function Home() {
 
     useEffect(() => {
-        document.title = "PrepWise | Master Your Tech Interview with AI Insights";
-        
-        const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc) {
-            metaDesc.setAttribute("content", "Master HR, Technical, and System Design rounds with PrepWise. Get data-driven insights and AI-powered feedback to land your dream software engineering job.");
-        }
+        updateSEO({
+            title: "PrepWise - Interactive Tech & HR Interview Preparation Platform",
+            description: "Master software engineering interviews with PrepWise. Practice role-based technical questions, STAR-method HR behavioral responses, and practical coding exercises across 12+ tech stacks.",
+            keywords: "PrepWise, Tech Interview Preparation, HR Behavioral Questions, STAR Method, Software Developer Prep, React Interview, Python Interview, AcharyaWorks, Rahul Kumar Acharya",
+            path: "/"
+        });
     }, []);
 
     return (

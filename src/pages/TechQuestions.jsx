@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiBookOpen, FiChevronDown, FiInfo, FiCheckCircle, FiArrowLeft } from "react-icons/fi";
+import { updateSEO } from "../utils/seo";
 import technicalQuestions from "../data/technicalQuestions";
 
 export default function TechQuestions({ domain }) {
@@ -10,12 +11,12 @@ export default function TechQuestions({ domain }) {
     useEffect(() => {
         if (domain) {
             const formattedDomain = domain.charAt(0).toUpperCase() + domain.slice(1);
-            document.title = `${formattedDomain} Technical Interview Concepts | PrepWise Foundation`;
-            
-            const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) {
-                metaDesc.setAttribute("content", `Master the architectural and theoretical core of ${formattedDomain}. Explore expert explanations on key technical concepts with PrepWise.`);
-            }
+            updateSEO({
+                title: `${formattedDomain} Technical Concepts & Architecture Questions | PrepWise`,
+                description: `Master the architectural foundation and theoretical core of ${formattedDomain}. Explore expert explanations on key technical concepts with PrepWise.`,
+                keywords: `${formattedDomain} Technical Questions, Core Concepts, Software Architecture, Technical Foundation, PrepWise`,
+                path: "/tech"
+            });
         }
     }, [domain]);
 

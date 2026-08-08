@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiArrowRight } from "react-icons/fi";
+import { updateSEO } from "../utils/seo";
 import { 
     FaReact, FaPython, FaJava, FaCode, FaLaptopCode, FaNodeJs, 
     FaJsSquare, FaHtml5, FaCss3Alt, FaDatabase, FaCloud, FaMobileAlt 
@@ -27,12 +28,12 @@ export default function ChooseDomain({ setDomain }) {
     const [search, setSearch] = useState("");
 
     useEffect(() => {
-        document.title = "Choose Your Tech Stack | PrepWise Interview Path";
-        
-        const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc) {
-            metaDesc.setAttribute("content", "Select your technology domain to begin. From Frontend and React to Python and Cloud—get specialized interview questions and roadmaps tailored to your focus.");
-        }
+        updateSEO({
+            title: "Choose Your Tech Stack - 12+ Specialized Interview Domains | PrepWise",
+            description: "Select your technology domain to begin. From Frontend and React to Python and Cloud—get specialized interview questions and roadmaps tailored to your focus.",
+            keywords: "Choose Tech Stack, React Interview Questions, Python Developer Prep, Java Interview, Node.js Prep, Database SQL Questions, Cloud DevOps Interview, PrepWise",
+            path: "/choose-domain"
+        });
     }, []);
 
     const filteredDomains = domains.filter(d => 

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiCode, FiCopy, FiCheck, FiExternalLink, FiTerminal, FiArrowLeft } from "react-icons/fi";
+import { updateSEO } from "../utils/seo";
 import codingQuestions from "../data/codingQuestions";
 
 export default function CodingQuestions({ domain }) {
@@ -11,12 +12,12 @@ export default function CodingQuestions({ domain }) {
     useEffect(() => {
         if (domain) {
             const formattedDomain = domain.charAt(0).toUpperCase() + domain.slice(1);
-            document.title = `${formattedDomain} Coding Challenges | PrepWise Lab`;
-            
-            const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) {
-                metaDesc.setAttribute("content", `Solve hand-picked ${formattedDomain} coding challenges on PrepWise. Practice with optimized solutions and industry-standard logic.`);
-            }
+            updateSEO({
+                title: `${formattedDomain} Coding Challenges & Solution Snippets | PrepWise Lab`,
+                description: `Solve practical ${formattedDomain} coding challenges on PrepWise. Practice with dark-theme syntax previews, copyable code snippets, and structured solutions.`,
+                keywords: `${formattedDomain} Coding Challenges, Practical Code Snippets, Coding Lab, Solution Modeling, PrepWise`,
+                path: "/coding"
+            });
         }
     }, [domain]);
 

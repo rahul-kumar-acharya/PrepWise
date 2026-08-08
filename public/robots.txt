@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://prepwise.acharyaworks.in/sitemap.xml
