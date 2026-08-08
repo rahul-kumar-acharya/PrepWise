@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+    <linearGradient id="glyphGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E0E7FF" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#312E81" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Base Card -->
+  <rect width="512" height="512" rx="120" fill="url(#bgGrad)" />
+
+  <!-- Inner Soft Glow Pill -->
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="none" stroke="#FFFFFF" stroke-opacity="0.15" stroke-width="6" />
+
+  <!-- Main Symbol: PrepWise Target & Code Mark -->
+  <g filter="url(#shadow)">
+    <!-- Code Bracket Icon Left -->
+    <path d="M 160 210 L 110 256 L 160 302" fill="none" stroke="url(#glyphGrad)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Code Bracket Icon Right -->
+    <path d="M 352 210 L 402 256 L 352 302" fill="none" stroke="url(#glyphGrad)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Center Checkmark / Star Peak -->
+    <path d="M 210 260 L 245 295 L 310 200" fill="none" stroke="#10B981" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>
