@@ -1,36 +1,29 @@
-# 🎯 PrepWise | AI-Driven Interview Orchestration Platform
+# 🎯 PrepWise | Interactive Tech & HR Interview Preparation Platform
 
-PrepWise is a high-performance career readiness engine designed for modern engineers. It bridges the gap between theoretical knowledge and interview execution by providing a domain-specific, orchestrated roadmap for technical and behavioral mastery.
+**PrepWise** is an interactive interview preparation web application built with React and Vite. It features role-based category filtering across 12+ tech stacks, STAR-method behavioral question guides, and practical coding challenge solutions.
 
-![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge\&logo=react)
-![Tailwind](https://img.shields.io/badge/Tailwind-3.x-38B2AC?style=for-the-badge\&logo=tailwind-css)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-6666FF?style=for-the-badge\&logo=framer)
-![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?style=for-the-badge\&logo=vite)
+🌐 **Live Demo**: [https://prepwise.acharyaworks.in/](https://prepwise.acharyaworks.in/)
 
----
-
-## 🛠️ Engineering Architecture
-
-### 1. Dynamic Domain Orchestration
-
-The platform utilizes a centralized state management system to filter 12+ specialized tech stacks. Whether focusing on **React**, **Python**, or **Cloud Architecture**, the UI dynamically adapts to provide niche-specific telemetry and roadmaps.
-
-### 2. Behavioral Mastery Engine
-
-Implements the **STAR Method** (Situation, Task, Action, Result) for structured behavioral responses. Includes "Interviewer Perspective" logic to align candidate narratives with real-world hiring expectations.
-
-### 3. Syntax-Themed Coding Laboratory
-
-A low-latency coding environment featuring high-fidelity code modeling. Provides optimized solutions for industry-standard problems, including complexity analysis and one-click copy functionality.
+![React](https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react)
+![Tailwind](https://img.shields.io/badge/Tailwind-4.x-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-6666FF?style=for-the-badge&logo=framer)
+![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?style=for-the-badge&logo=vite)
 
 ---
 
-## ✨ Key Features
+## ✨ Features & Highlights
 
-* 📊 **Granular User Telemetry** – Track preparation progress with structured insights
-* 🎨 **High-Fidelity UI** – Smooth transitions powered by Framer Motion
-* 📱 **Responsive Layout Engine** – Optimized across all devices
-* 🔍 **Dynamic SEO** – Smart metadata injection for better discoverability
+### 🎯 1. Role-Based Tech Stack Filtering
+Filter curated interview questions across 12+ specialized technology stacks (React, Python, Java, Backend, Cloud, Database, etc.) with `localStorage` state persistence.
+
+### 🗣️ 2. STAR-Method Behavioral Practice
+Master HR behavioral rounds with structured answers using the **STAR Framework** (Situation, Task, Action, Result) alongside interviewer perspective notes.
+
+### 💻 3. Practical Coding Challenge Lab
+Solve practical coding challenges with clean, multi-language solutions (JavaScript, Python, Java), syntax highlighting, and one-click code snippet copying.
+
+### 🔍 4. Dynamic SEO & Google Sitelinks
+Built-in dynamic metadata injection (`src/utils/seo.js`), JSON-LD Structured Data, OpenGraph banners, custom SVG favicon, `robots.txt`, and XML sitemap for search engine discoverability.
 
 ---
 
@@ -38,61 +31,25 @@ A low-latency coding environment featuring high-fidelity code modeling. Provides
 
 ```
 src/
-├── components/       # Reusable UI components (Navbar, Cards, etc.)
-├── data/             # Centralized question datasets (JSON)
-├── pages/            # Application views (Home, Dashboard, Lab)
-├── App.jsx           # Routing and global state
-└── main.jsx          # Entry point
+├── components/       # Reusable UI components (Navbar, Footer, Cards)
+├── data/             # Centralized question datasets & tech stack roadmaps
+├── pages/            # Application views (Home, ChooseDomain, Dashboard, HR, Tech, Coding)
+├── utils/            # Helper utilities (SEO metadata manager, localStorage storage)
+├── App.jsx           # Routing & global domain state
+└── main.jsx          # React entry point
 ```
 
 ---
 
-## 📸 Preview
+## 👨‍💻 Author & Attribution
 
-| Home                                     | Dashboard                                     | Coding Lab                              |
-| ---------------------------------------- | --------------------------------------------- | --------------------------------------- |
-| ![Home](public/Images/Projects/home.png) | ![Dashboard](public/Images/Projects/dash.png) | ![Lab](public/Images/Projects/code.png) |
-
----
-
-## ⚙️ Installation & Setup
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/rahulacharya1/prepwise.git
-cd prepwise
-```
-
-### 2. Install Dependencies
-
-```bash
-npm install
-```
-
-### 3. Run Development Server
-
-```bash
-npm run dev
-```
-
----
-
-## 🚀 Deployment
-
-You can deploy this project using platforms like **Vercel**, **Netlify**, or any modern hosting service supporting Vite apps.
+**Rahul Kumar Acharya** — [AcharyaWorks](https://acharyaworks.in)
+* 💼 **Portfolio**: [https://acharyarahul.in](https://acharyarahul.in)
+* 🐙 **GitHub**: [https://github.com/rahul-kumar-acharya](https://github.com/rahul-kumar-acharya)
+* 💼 **LinkedIn**: [https://linkedin.com/in/rahulkumaracharya/](https://linkedin.com/in/rahulkumaracharya/)
 
 ---
 
 ## 🛡️ License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
-
-## 👨‍💻 Author
-
-**Rahul Kumar Acharya**
-🔗 GitHub: https://github.com/rahulacharya1
-
----
+This project is licensed under the MIT License.

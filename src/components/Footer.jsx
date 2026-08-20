@@ -15,7 +15,7 @@ export default function Footer() {
             <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-indigo-50 rounded-full blur-3xl opacity-50" />
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-40 pb-10">
                     {/* Brand Info */}
                     <div className="flex flex-col items-start gap-4">
                         <Link to="/" className="text-2xl font-black tracking-tight text-indigo-600">
@@ -38,12 +38,6 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link to="/dashboard" className="hover:text-indigo-600 transition-colors">Preparation Dashboard</Link>
-                            </li>
-                            <li>
-                                <Link to="/hr" className="hover:text-indigo-600 transition-colors">STAR Behavioral Practice</Link>
-                            </li>
-                            <li>
-                                <Link to="/coding" className="hover:text-indigo-600 transition-colors">Coding Challenges Lab</Link>
                             </li>
                         </ul>
                     </div>
